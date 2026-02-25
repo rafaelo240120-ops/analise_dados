@@ -1,10 +1,10 @@
 # LISTA DE EXERCÍCIOS – ANÁLISE DE DADOS COM PANDAS Dataset: Ranking
 # Mundial de Universidades (notas.csv)
 import pandas as pd
-df = pd.read_csv(r"C:\\Users\\rafin\Downloads\\notas.csv")
+df = pd.read_csv(r"C:\Users\rafin\Downloads\notas.csv")
 df.shape
 df.columns
-df.types
+df.dtypes
 df.isna().sum()
 df.head()
 df.tall()
