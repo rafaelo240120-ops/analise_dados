@@ -108,14 +108,49 @@ print(produtos_filtrados)
 #Peça ao usuário para digitar uma palavra em inglês e exiba sua tradução, caso exista no dicionário.
 #Se a palavra não estiver cadastrada, exiba "Palavra não encontrada".
 
-
-
+tradutor = {
+    "hi": "oi",
+    "bye": "tchau",
+    "good morning": "bom dia",
+    "deal": "negócio",
+    "book": "livro"
+}
+palavra_ingles = input("Digite uma palavra em inglês: ")
+traducao = tradutor.get(palavra_ingles)
+if traducao:
+    print(f"A tradução de '{palavra_ingles}' é '{traducao}'.")
+else:    print("Palavra não encontrada.")
 
 
 #Exercício 8: Lista de Compras
 #Crie um dicionário onde as chaves são nomes de produtos e os valores são quantidades.
 #Permita ao usuário adicionar produtos, atualizar quantidades e remover itens.
 #No final, exiba a lista completa de compras.
+
+lista_compras = {}
+while True:
+    acao = input("Digite 'adicionar', 'atualizar', 'remover' ou 'sair': ")
+    if acao == 'sair':
+        break
+    elif acao == 'adicionar':
+        produto = input("Digite o nome do produto: ")
+        quantidade = int(input("Digite a quantidade: "))
+        lista_compras[produto] = lista_compras.get(produto, 0) + quantidade
+    elif acao == 'atualizar':
+        produto = input("Digite o nome do produto: ")
+        if produto in lista_compras:
+            quantidade = int(input("Digite a nova quantidade: "))
+            lista_compras[produto] = quantidade
+        else:
+            print("Produto não encontrado.")
+    elif acao == 'remover':
+        produto = input("Digite o nome do produto: ")
+        if produto in lista_compras:
+            del lista_compras[produto]
+        else:
+            print("Produto não encontrado.")
+    else:
+        print("Ação inválida. Tente novamente.")
 
 
 
@@ -130,12 +165,32 @@ print(produtos_filtrados)
 #    "Mariana": {"idade": 17, "notas": [9, 10, 8]}
 #}
 #1. Adicione um novo aluno ao dicionário.
+
+turma = {
+    "Lucas": {"idade": 17, "notas": [8, 9, 7]},
+    "Pedro": {"idade": 18, "notas": [6, 7, 8]},
+    "Mariana": {"idade": 17, "notas": [9, 10, 8]}
+}
+turma["Victoria"] = {"idade": 18, "notas": [7, 8, 9]}
+
 #2. Calcule a média de notas de cada aluno e exiba no formato:
 #   Ana: Média 8.0
 #   Pedro: Média 7.0
 #   Mariana: Média 9.0
-#3. Encontre o aluno com a maior média e exiba o nome dele.
 
+for aluno, dados in turma.items():
+    media = sum(dados["notas"]) / len(dados["notas"])
+    print(f"{aluno}: Média {media:.1f}")
+    
+#3. Encontre o aluno com a maior média e exiba o nome dele.
+maior_media = 0
+aluno_maior_media = ""
+for aluno, dados in turma.items():
+    media = sum(dados["notas"]) / len(dados["notas"])
+    if media > maior_media:
+        maior_media = media
+        aluno_maior_media = aluno
+print(f"Aluno com maior média: {aluno_maior_media} com média {maior_media:.1f}")
 
 
 #Exercício 10: Cadastro de Funcionários
@@ -145,9 +200,22 @@ print(produtos_filtrados)
 #- Cargo
 #- Salário
 #Os funcionários devem ser armazenados em um dicionário onde a chave é o nome e o valor é outro dicionário com os dados do funcionário.
-#O programa deve permitir consultar funcionários pelo nome e exibir suas informações.
+#O programa deve permitir consultar funcionários pelo nome e exibir suas informações. 
 
-
-
-
-
+funcionarios = {}
+while True:
+    acao = input("Digite 'adicionar', 'consultar' ou 'sair': ")
+    if acao == 'sair':
+        break
+    elif acao == 'adicionar':
+        nome = input("Digite o nome do funcionário: ")
+        cargo = input("Digite o cargo do funcionário: ")
+        salario = float(input("Digite o salário do funcionário: "))
+        funcionarios[nome] = {"cargo": cargo, "salário": salario}
+    elif acao == 'consultar':
+        nome = input("Digite o nome do funcionário para consulta: ")
+        if nome in funcionarios:
+            info = funcionarios[nome]
+            print(f"Nome: {nome}, Cargo: {info['cargo']}, Salário: R$ {info['salário']:.2f}")
+        else:
+            print("Funcionário não encontrado.")
