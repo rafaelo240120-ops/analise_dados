@@ -11,10 +11,13 @@ df.isnull().sum()
 df.shape
 
 #2.	Qual a média salarial? Qual é o maior salário? O menor salário?
+media_salarial = df['salary'].mean()
+maior_salario = df['salary'].max()
+menor_salario = df['salary'].min()
+print(f"Média Salarial: {media_salarial}")
+print(f"Maior Salário: {maior_salario}")
+print(f"Menor Salário: {menor_salario}")    
 
-df['salary'].mean()
-df['salary'].max()
-df['salary'].min()
 
 #3.	Crie um df com apenas as colunas job_title, salary, company_location, company_size, remote_ratio?
 
