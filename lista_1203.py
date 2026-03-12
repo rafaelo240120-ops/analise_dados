@@ -1,44 +1,41 @@
-1 - como identificar uma lista em python?
 
-# para identifiar uma lista em python é preciso verificar se a variável é do tipo list, para isso podemos usar a função type() ou isinstance().
-# Exemplo: if isinstance(variavel, list): print("É uma lista")
+1 - Como identificar uma lista em Python?
+pythonlista = ["rafael", 0, 50]
 
-2 - como pegar o 1° elemento de uma lista em python?
+2 - Como pegar o 1° elemento de uma lista em Python?
+pythonlista[0]
 
-# para pegar o 1° elemento de uma lista em python, basta usar o índice 0, pois os índices começam em 0. Exemplo: print(lista[0])
+3 - Como identificar um dicionário em Python?
+pythondicionario = {
+    "nome": "rafael",
+    "idade": 21,
+    "endereco": "rua teste"
+}
 
-3 - como identificar um dicionário em python?
+4 - Como pegar um elemento em dicionário?
+pythondicionario["nome"]
 
-# para identificar um dicionário em python, basta verificar se a variável é do tipo dict, para isso podemos usar a função type() ou isinstance().
-# Exemplo: if isinstance(variavel, dict): print("É um dicionário")
+5 - Como identificar uma lista de dicionário?
+pythonlista2 = [dicionario]
+lista2[0]
 
-4 - como pegar um elemento em dicionário?
+6 - Como transformar uma lista de dicionário em um DataFrame?
+pythonimport pandas as pd
+df = pd.DataFrame(lista)
+df = pd.DataFrame([dicionario])
 
-#  print(dicionario['chave'])
+7 - Como consumir um arquivo CSV no DataFrame?
+pythonarquivo = "notas.csv"
+df = pd.read_csv(arquivo)
 
-5 - como identfificar uma lista em dicionário?
+8 - Como consumir um arquivo Excel no DataFrame?
+pythonarquivo = "cadastro_alunos.xlsx"
+df = pd.read_excel(arquivo)
 
-# para identificar uma lista em um dicionário, basta verificar se o valor associado a uma chave é do tipo list, para isso podemos usar a função type() ou isinstance(). 
-#Exemplo: if isinstance(dicionario['chave'], list): print("É uma lista")
+9 - Como filtrar uma coluna de valores inteiros?
+pythonfiltro = df["national_rank"] > 4
+df.loc[filtro, ["institution", "country"]]
 
-6 - como teansformar uma lista de dicionário em um DataFrame?
-
-# para transformar uma lista de dicionário em um DataFrame, tem que usar a função pd.DataFrame() do pandas, passando a lista de dicionário como argumento. 
-# Exemplo: df = pd.DataFrame(lista_de_dicionarios)
-
-7 - como consumir um arquivo csv no DataFrame?
-
-# pd.read_csv() do pandas, passando o caminho do arquivo csv como argumento.
-
-8 - como consumir um arquivo excel no DataFrame?
-
-# pd.read_excel() do pandas, passando o caminho do arquivo excel como argumento.
-
-9 - como filtrar uma coluna de valores?
-
-# filtro = df['coluna'] > valor
-# df[filtro]
-
-10 - como filtrar uma coluna de string?
-
-# filtro = df['coluna'] == 'string'
+10 - Como filtrar uma coluna de string?
+pythonfiltro = df["institution"].str.contains("^C")
+df[filtro]
