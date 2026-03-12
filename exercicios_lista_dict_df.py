@@ -34,7 +34,7 @@ print(df_vendas.shape)
 # d) Mostre os tipos de dados das colunas
 df_vendas.dtypes
 
-# RESOLUCAO: complete aqui
+
 
 
 
@@ -51,7 +51,7 @@ df_vendas.loc[0:0,]
 # c) Mostre as linhas de indice 2 ate 4
 df_vendas.loc[2:4,]
 
-# RESOLUCAO: complete aqui
+
 
 
 # -------------------------------------------------
@@ -68,7 +68,7 @@ df_vendas.loc[filtro]
 # c) Filtre vendas acima de 11000 na filial "Norte"
 filtro = (df_vendas["vendas"] > 11000) & (df_vendas["filial"] == "Norte")
 df_vendas.loc[filtro]
-# RESOLUCAO: complete aqui
+
 
 
 # -------------------------------------------------
@@ -83,7 +83,6 @@ df_vendas["meta_batida"] = df_vendas["vendas"] >= 13000
 # c) Mostre apenas "filial", "mes", "ticket_medio", "meta_batida"
 df_vendas.loc[:, ["filial", "mes", "ticket_medio", "meta_batida"]]
 
-# RESOLUCAO: complete aqui
 
 
 # -------------------------------------------------
@@ -99,7 +98,7 @@ df_vendas.groupby("mes")["clientes"].mean()
 # c) Descubra a filial com maior total de vendas
 maximo = df-
 
-# RESOLUCAO: complete aqui
+
 
 
 # -------------------------------------------------
@@ -108,10 +107,13 @@ maximo = df-
 
 # Exercicio 6:
 # a) Ordene df_vendas por "vendas" em ordem decrescente
+df_vendas.sort_values(by="vendas", ascending=False)
 # b) Pegue os 3 maiores resultados de vendas
+df_vendas.nlargest(3, "vendas")
 # c) Mostre um ranking com "filial", "mes", "vendas"
+df_vendas.loc[:, ["filial", "mes", "vendas"]].sort_values(by="vendas", ascending=False).reset_index(drop=True)
 
-# RESOLUCAO: complete aqui
+
 
 
 # -------------------------------------------------
@@ -123,13 +125,17 @@ maximo = df-
 #    - total_vendas
 #    - media_ticket_medio
 #    - total_clientes
+resumo = df_vendas.groupby("filial").agg(
+    total_vendas = ("vendas", "sum"),
+    media_ticket_medio = ("ticket_medio", "mean"),
+    total_clientes = ("clientes", "sum")
+).reset_index()
 # 2) Ordene o resumo por total_vendas (desc)
+resumo.sort_values(by="total_vendas", ascending=False)
+
 # 3) Exiba qual filial teve melhor desempenho geral
-
-# RESOLUCAO: complete aqui
-
-
-
+resumo["desempenho"] = resumo["total_vendas"] * resumo["media_ticket_medio"] / resumo["total_clientes"]
+resumo.sort_values(by="desempenho", ascending=False).reset_index(drop=True)
 
 
 
@@ -157,7 +163,7 @@ type(dic)
 dic["Column A"]
 # 4. Como acessar o segundo elemento da "Column C"?
 dic["Column C"][1]
-# RESPONDA AQUI:
+
 
 
 
@@ -171,11 +177,13 @@ df1 = pd.DataFrame(dados_list_dict[0])
 # 2. Mostre:
 #    - shape
 #    - tipos das colunas
+df1.shape
+df1.dtypes
 # 3. Calcule:
 #    - soma de cada coluna
 #    - média de cada coluna
-
-# RESOLVA AQUI:
+df1.sum()
+df1.mean()
 
 
 
@@ -185,10 +193,13 @@ df1 = pd.DataFrame(dados_list_dict[0])
 
 # No df1:
 # 1. Crie coluna "Total" = soma das colunas
+df1["Total"] = df1.sum(axis=1)
 # 2. Crie coluna "Media" = média por linha
+df1["Media"] = df1.mean(axis=1)
 # 3. Filtre linhas onde Total > 10
+filtro = df1["Total"] > 10
+df1.loc[filtro]
 
-# RESOLVA AQUI:
 
 
 
@@ -212,7 +223,6 @@ df1.to_dict(orient="records")
 #   Estrutura colunar, útil para reconstruir DataFrame.
 df1.to_dict(orient="list")
 
-# RESOLVA AQUI:
 
 
 # -----------------------------------------------------------
@@ -226,7 +236,6 @@ lista_a_x10 = [x * 10 for x in lista_a]
 # 3. Crie uma nova coluna chamada "Column A x10" com essa nova lista.
 df1["Column A x10"] = lista_a_x10
 
-# RESOLVA AQUI:
 
 
 
@@ -258,11 +267,18 @@ dados = [
 
 # Exercício 1
 # 1. Qual o tipo da variável dados?
+type(dados)
 # 2. Quantos registros existem?
+len(dados)
 # 3. Quais são as chaves do primeiro dicionário?
+list(dados[0].keys())
 # 4. Liste todos os países existentes (sem repetição).
+paises = set()
+for registro in dados:
+    paises.add(registro["nome_pais"])
+print(paises)
 
-# RESOLVA AQUI:
+
 
 
 
@@ -280,7 +296,6 @@ df.head()
 # 3. Converta a coluna periodo para datetime
 df["periodo"] = pd.to_datetime(df["periodo"])
 
-# RESOLVA AQUI:
 
 
 
@@ -290,20 +305,26 @@ df["periodo"] = pd.to_datetime(df["periodo"])
 
 # Exercício 3 – Filtros
 # 1. Filtre apenas Brasil
+filtro = df["nome_pais"] == "Brasil"
+df.loc[filtro]
 # 2. Filtre apenas Produto A
+filtro = df["descricao"] == "Produto A"
+df.loc[filtro]
 # 3. Filtre valor > 4000
+filtro = df["valor"] > 4000
+df.loc[filtro]
 # 4. Combine Brasil + Produto A
-
-# RESOLVA AQUI:
+filtro = (df["nome_pais"] == "Brasil") & (df["descricao"] == "Produto A")
+df.loc[filtro]
 
 
 # Exercício 4 – Ordenação
 # 1. Ordene por valor crescente
+df.sort_values(by="valor", ascending=True)
 # 2. Ordene por valor decrescente
+df.sort_values(by="valor", ascending=False)
 # 3. Ordene por periodo e depois por valor
-
-# RESOLVA AQUI:
-
+df.sort_values(by=["periodo", "valor"], ascending=[True, True])
 
 
 # ===========================================================
@@ -312,20 +333,26 @@ df["periodo"] = pd.to_datetime(df["periodo"])
 
 # Exercício 5 – GroupBy Simples
 # 1. Total exportado por país
+df.groupby("nome_pais")["valor"].sum()
 # 2. Total exportado por produto
+df.groupby("descricao")["valor"].sum()
 # 3. Média por país
+df.groupby("nome_pais")["valor"].mean()
 # 4. Quantidade de operações por país
+df.groupby("nome_pais")["valor"].count()
 
-# RESOLVA AQUI:
 
 
 # Exercício 6 – GroupBy Múltiplo
 # Agrupe por nome_pais e descricao
+df.groupby(["nome_pais", "descricao"])["valor"].sum()
+
 # Calcule soma, média e contagem
+df.groupby(["nome_pais", "descricao"])["valor"].agg(["sum", "mean", "count"])
 
 # Explique em comentário o que essa tabela representa
+# A tabela mostra o total exportado, a média e a quantidade de operações para cada combinação de país e produto. Podemos comparar o desempenho de cada produto em cada país e identificar quais produtos têm maior valor exportado em cada país.
 
-# RESOLVA AQUI:
 
 
 
@@ -334,16 +361,21 @@ df["periodo"] = pd.to_datetime(df["periodo"])
 # ===========================================================
 
 # Exercício 7 – Pivot por Produto
+
 # Linhas: periodo
 # Colunas: descricao
 # Valores: soma de valor
 
+
 # Responda:
 # 1. Qual produto vendeu mais?
+df.pivot_table(values="valor", index="periodo", columns="descricao", aggfunc="sum").idxmax(axis=1).mode()[0]
 # 2. Qual mês teve maior valor total?
+df.pivot_table(values="valor", index="periodo", columns="descricao", aggfunc="sum").sum(axis=1).idxmax()
 # 3. Existe mês sem venda?
+df.pivot_table(values="valor", index="periodo", columns="descricao", aggfunc="sum").sum(axis=1) == 0
 
-# RESOLVA AQUI:
+
 
 
 # Exercício 8 – Pivot por País
@@ -352,8 +384,8 @@ df["periodo"] = pd.to_datetime(df["periodo"])
 # Valores: soma de valor
 
 # Explique o que podemos interpretar dessa tabela
+#A tabela mostra a evolução das exportações por país ao longo do tempo. Podemos identificar quais países tiveram maior valor exportado em cada período e comparar o desempenho entre eles. Também é possível observar tendências, como crescimento ou queda nas exportações para cada país.
 
-# RESOLVA AQUI:
 
 
 
@@ -363,10 +395,14 @@ df["periodo"] = pd.to_datetime(df["periodo"])
 
 # Exercício 9
 # 1. Extraia ano e mês da coluna periodo
+df["ano"] = df["periodo"].dt.year
+df["mes"] = df["periodo"].dt.month
 # 2. Crie coluna valor_mil (valor / 1000)
-# 3. Calcule crescimento percentual por produto mês a mês
+df["valor_mil"] = df["valor"] / 1000
 
-# RESOLVA AQUI:
+# 3. Calcule crescimento percentual por produto mês a mês
+df["crescimento_pct"] = df.groupby("descricao")["valor"].pct_change() * 100
+
 
 
 
@@ -376,10 +412,14 @@ df["periodo"] = pd.to_datetime(df["periodo"])
 
 # Exercício 10
 # 1. Verifique valores nulos
-# 2. Verifique valores negativos
-# 3. Verifique duplicatas
+df.isnull().sum()
 
-# RESOLVA AQUI:
+# 2. Verifique valores negativos
+df[df["valor"] < 0]
+
+# 3. Verifique duplicatas
+df.duplicated().sum()
+
 
 
 

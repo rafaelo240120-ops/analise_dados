@@ -124,6 +124,11 @@ Exercícios:
 4. Transforme em DataFrame.
 """
 # RESOLVA AQUI:
+url = "https://www.ipeadata.gov.br/api/odata4/ValoresSerie(SERCODIGO='PPIM12')"
+response = requests.get(url)
+response.status_code
+dados = response.json()
+df_ipea = pd.DataFrame(dados['value'])
 
 
 
@@ -150,6 +155,7 @@ Exercícios:
 4. Plote gráfico de linha.
 """
 # RESOLVA AQUI:
+
 
 
 
