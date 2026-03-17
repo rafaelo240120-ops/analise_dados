@@ -103,8 +103,14 @@ Consultar a população total de um estado específico.
 url = "https://servicodados.ibge.gov.br/api/v1/localidades/aglomeracoes-urbanas/00301"
 response = requests.get(url)
 response.status_code
-dados = response.json()[0]["municipios"]
-df = pd.DataFrame(dados)
+#trasnfroma em json
+dados = response.json()
+#pega o primeiro elemento do json e depois pega a chave "municipios" que é uma lista de dicionários
+dados = dados[0]
+#pega o primeiro elemento da lista de dicionários
+dados = dados["municipios"]
+#transforma em df
+df = pd.json_normalize(dados)
 
 
 
@@ -124,11 +130,13 @@ Exercícios:
 4. Transforme em DataFrame.
 """
 # RESOLVA AQUI:
-url = "https://www.ipeadata.gov.br/api/odata4/ValoresSerie(SERCODIGO='PPIM12')"
+url = "https://www.ipeadata.gov.br/api/odata4/Metadados/"
 response = requests.get(url)
 response.status_code
 dados = response.json()
-df_ipea = pd.DataFrame(dados['value'])
+dados = dados["value"]
+df = pd.DataFrame(dados)
+df = df.loc[:,["SERCODIGO","SERNOME","SERCOMENTARIO"]]
 
 
 
@@ -155,8 +163,17 @@ Exercícios:
 4. Plote gráfico de linha.
 """
 # RESOLVA AQUI:
-
-
+codigo = 4189
+url = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.{código}?formato=json"
+params = {
+    "formato": "json",
+    "dataInicial": "01/01/2024",
+    "dataFinal": "31/12/2024"
+}
+response = requests.get(url, params=params)
+response.status_code
+dados = response.json()
+df = pd.DataFrame(dados)
 
 
 # ===========================================================
@@ -176,6 +193,7 @@ Explique:
 O que são parâmetros de consulta?
 """
 # RESOLVA AQUI:
+
 
 
 
