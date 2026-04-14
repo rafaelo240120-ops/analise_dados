@@ -5,6 +5,7 @@ df.shape
 df.columns
 df.dtypes
 df.isnull().sum()
+df.head()
 
 #1.	Quantas linhas e quantas colunas tem o dataset?
 

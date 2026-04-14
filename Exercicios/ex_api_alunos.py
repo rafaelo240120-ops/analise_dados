@@ -130,6 +130,8 @@ Exercícios:
 4. Transforme em DataFrame.
 """
 # RESOLVA AQUI:
+import requests
+import pandas as pd
 url = "https://www.ipeadata.gov.br/api/odata4/Metadados/"
 response = requests.get(url)
 response.status_code
