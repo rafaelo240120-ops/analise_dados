@@ -116,8 +116,6 @@ retorno = (preco_fim / preco_ini - 1) * 100
 
 
 
-
-
 # (1,5) 10 - Você tem acesso à API do Laboratório de Finanças, que fornece dados do Planilhão em formato JSON. 
 # Selecione a empresa do setor de "tecnologia" que apresenta o maior ROE (Return on Equity) na data base 2024-04-01.
 # Exiba APENAS AS COLUNAS "ticker", "setor" e o "roe"
@@ -171,8 +169,6 @@ df2['rank_earning_yield'] = df2['earning_yield'].rank(ascending=False)
 df2['rank_final_magic'] = (df2['rank_roc'] + df2['rank_earning_yield']) / 2
 
 Carteira_Magic = df2.sort_values('rank_final_magic', ascending=False)['ticker'][:10]
-
-
 
 
 # (1,5) 12 - Quantos setores ("setor") tem essa carteira formada por 10 ações?
